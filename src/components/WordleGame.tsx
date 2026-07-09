@@ -313,6 +313,7 @@ export function WordleGame() {
         guesses={guesses}
         colors={colors}
         dateStr={dateStr}
+        onClose={() => setShowModal(false)}
       />
     </div>
   );

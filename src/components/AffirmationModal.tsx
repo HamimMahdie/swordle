@@ -11,9 +11,10 @@ interface AffirmationModalProps {
   guesses: string[];
   colors: ('correct' | 'present' | 'absent')[][];
   dateStr: string;
+  onClose: () => void;
 }
 
-export function AffirmationModal({ isOpen, isWin, guesses, colors, dateStr }: AffirmationModalProps) {
+export function AffirmationModal({ isOpen, isWin, guesses, colors, dateStr, onClose }: AffirmationModalProps) {
   const [affirmation, setAffirmation] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
   const [copied, setCopied] = useState<boolean>(false);
@@ -148,7 +149,7 @@ export function AffirmationModal({ isOpen, isWin, guesses, colors, dateStr }: Af
 
               <button
                 type="button"
-                onClick={() => window.location.reload()}
+                onClick={onClose}
                 className="retro-button w-full py-3 px-4 font-press-start text-[10px] sm:text-xs bg-cozy-beige text-retro-brown font-bold cursor-pointer uppercase"
               >
                 CLOSE
