@@ -1,4 +1,6 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Saumya's Wordle 🐸✨
+
+A cozy, retro 8-bit daily Wordle game with sweet affirmations, customized matcha green and sunflower yellow themes.
 
 ## Getting Started
 
