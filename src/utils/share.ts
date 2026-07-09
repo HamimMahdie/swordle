@@ -18,11 +18,11 @@ export function generateShareText(
     .map((row) =>
       row
         .map((color) => {
-          if (color === 'correct') return '▓';
-          if (color === 'present') return '▒';
-          return '░';
+          if (color === 'correct') return '🐸';
+          if (color === 'present') return '🌻';
+          return '🏴‍☠️';
         })
-        .join(' ')
+        .join('')
     )
     .join('\n');
 
