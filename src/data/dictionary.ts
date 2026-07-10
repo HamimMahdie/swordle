@@ -257,7 +257,7 @@ yurts yuzus zambo zanza zanza zappy zarfs zaxes zealot zeals zebra zebu-y zebus 
 zeins zemas zenit zenith zeros zests zesty zetas zibet zilch zills zincs zincy zines zings
 zingy zinke zinky zions zippy ziram zitis zizit zlote zloty zoaea zoeae zoeal zooid zolot
 zombi zombie zonal zoned zoner zones zonks zonky zooey zooid zoold zoons zoopy zooty zoppo
-zowie zunis zuzim zymase zymes zymic zymin zythum
+zowie zunis zuzim zymase zymes zymic zymin zythum tarot clays glaze
 `;
 
 const wordSet = new Set(

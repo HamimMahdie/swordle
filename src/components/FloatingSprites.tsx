@@ -15,11 +15,11 @@ interface SpriteProps {
 }
 
 function FloatingSprite({ src, alt, size, left, top, delay, duration }: SpriteProps) {
-  // Simple floating drift: gentle translation and slight rotation (no scaling or stretching)
+  // Gentle, local drifting (no screen-wide wandering)
   const animateSettings = {
-    y: [0, -20, 20, 0],
-    x: [0, 12, -12, 0],
-    rotate: [0, 6, -6, 0],
+    y: [0, -18, 18, 0],
+    x: [0, 8, -8, 0],
+    rotate: [0, 5, -5, 0],
   };
 
   const transitionSettings = {
@@ -31,7 +31,8 @@ function FloatingSprite({ src, alt, size, left, top, delay, duration }: SpritePr
 
   return (
     <motion.div
-      className="absolute opacity-40"
+      // opacity-15 on mobile, opacity-35 on desktop to keep it subtle behind text
+      className="absolute opacity-15 md:opacity-35"
       style={{
         left,
         top,
@@ -42,7 +43,6 @@ function FloatingSprite({ src, alt, size, left, top, delay, duration }: SpritePr
       transition={transitionSettings}
     >
       <div className="relative w-full h-full">
-        {/* We append a cache-busting query parameter '?v=2' to force browsers to load the transparent assets */}
         <Image
           src={`${src}?v=2`}
           alt={alt}
@@ -58,72 +58,113 @@ function FloatingSprite({ src, alt, size, left, top, delay, duration }: SpritePr
 
 export function FloatingSprites() {
   const spriteList = [
-    // Left Side Assets
+    // Left Side Margin Sprites (5 assets)
     {
       id: 1,
       src: '/frog_lilypad.png',
       alt: 'Frog',
       size: 70,
       left: '4%',
-      top: '18%',
-      duration: 9,
+      top: '12%',
+      duration: 8,
       delay: 0,
     },
     {
       id: 2,
       src: '/matcha_cup.png',
       alt: 'Matcha',
-      size: 55,
-      left: '8%',
-      top: '52%',
-      duration: 11,
+      size: 65,
+      left: '7%',
+      top: '32%',
+      duration: 10,
       delay: 1.5,
     },
     {
       id: 3,
-      src: '/sunflower.png',
-      alt: 'Sunflower',
+      src: '/pumpkin.png',
+      alt: 'Pumpkin',
       size: 60,
       left: '3%',
-      top: '80%',
-      duration: 10,
+      top: '52%',
+      duration: 9,
       delay: 0.8,
     },
-    // Right Side Assets
     {
       id: 4,
       src: '/sunflower.png',
       alt: 'Sunflower',
-      size: 65,
-      left: '88%',
-      top: '15%',
+      size: 62,
+      left: '6%',
+      top: '72%',
       duration: 11,
-      delay: 3,
+      delay: 2.2,
     },
     {
       id: 5,
       src: '/frog_lilypad.png',
       alt: 'Frog',
+      size: 60,
+      left: '4%',
+      top: '90%',
+      duration: 8.5,
+      delay: 0.4,
+    },
+    // Right Side Margin Sprites (5 assets)
+    {
+      id: 6,
+      src: '/sunflower.png',
+      alt: 'Sunflower',
+      size: 65,
+      left: '88%',
+      top: '12%',
+      duration: 11,
+      delay: 3,
+    },
+    {
+      id: 7,
+      src: '/frog_lilypad.png',
+      alt: 'Frog',
       size: 65,
       left: '85%',
-      top: '48%',
+      top: '32%',
       duration: 9.5,
       delay: 1.6,
     },
     {
-      id: 6,
+      id: 8,
       src: '/matcha_cup.png',
       alt: 'Matcha',
-      size: 50,
+      size: 60,
       left: '89%',
-      top: '76%',
-      duration: 12,
+      top: '52%',
+      duration: 11,
       delay: 0.2,
+    },
+    {
+      id: 9,
+      src: '/pumpkin.png',
+      alt: 'Pumpkin',
+      size: 58,
+      left: '86%',
+      top: '72%',
+      duration: 10,
+      delay: 1.2,
+    },
+    {
+      id: 10,
+      src: '/sunflower.png',
+      alt: 'Sunflower',
+      size: 60,
+      left: '88%',
+      top: '90%',
+      duration: 12,
+      delay: 0.6,
     },
   ];
 
   return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden z-0 select-none hidden md:block">
+    // Restored 'block' to render the sprites in the background on mobile screens as well
+    <div className="fixed inset-0 pointer-events-none overflow-hidden z-0 select-none block">
       {spriteList.map((sprite) => (
         <FloatingSprite
           key={sprite.id}

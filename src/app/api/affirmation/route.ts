@@ -19,6 +19,7 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({
       affirmation: dailyEntry.affirmation,
+      targetWord: dailyEntry.word.toUpperCase(),
     });
   } catch (error) {
     console.error('Error fetching daily affirmation:', error);

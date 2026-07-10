@@ -50,6 +50,8 @@ export function WordleGame() {
     const today = getLocalDateString();
     setDateStr(today);
 
+    let timer: NodeJS.Timeout;
+
     const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (saved) {
       try {
@@ -60,7 +62,7 @@ export function WordleGame() {
           setGameStatus(parsed.status);
           if (parsed.status !== 'IN_PROGRESS') {
             // Open modal after a tiny delay if game is already completed today
-            setTimeout(() => setShowModal(true), 800);
+            timer = setTimeout(() => setShowModal(true), 800);
           }
         } else {
           // New day, reset state
@@ -70,6 +72,10 @@ export function WordleGame() {
         console.error('Failed to parse saved game state:', err);
       }
     }
+
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
   }, [getLocalDateString]);
 
   // Check for local midnight reset while page is open
@@ -151,7 +157,7 @@ export function WordleGame() {
       // Valid word: perform grid reveals
       const newGuesses = [...guesses, currentGuess];
       const newColors = [...colors, data.colors];
-      
+
       // Wait for card flip animations to complete before updating game status and showing modal
       setTimeout(() => {
         let newStatus: 'IN_PROGRESS' | 'WON' | 'LOST' = 'IN_PROGRESS';
@@ -182,7 +188,7 @@ export function WordleGame() {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.metaKey || e.ctrlKey || e.altKey) return;
-      
+
       if (e.key === 'Enter') {
         onEnter();
       } else if (e.key === 'Backspace') {
@@ -199,7 +205,7 @@ export function WordleGame() {
   // Map keyboard character colors based on guess history
   const getCharStatuses = () => {
     const charStatuses: Record<string, 'correct' | 'present' | 'absent'> = {};
-    
+
     guesses.forEach((guess, guessIndex) => {
       const rowColors = colors[guessIndex];
       for (let i = 0; i < guess.length; i++) {
@@ -240,7 +246,7 @@ export function WordleGame() {
         {/* Sunflower Sprite */}
         <div className="relative w-8 h-8 sm:w-10 sm:h-10 select-none">
           <Image
-            src="/sunflower.png?v=2"
+            src="/sunflower.png"
             alt="Sunflower"
             fill
             className="object-contain mix-blend-multiply"
@@ -255,14 +261,14 @@ export function WordleGame() {
             SAUMYA'S WORDLE
           </h1>
           <span className="font-vt323 text-xs sm:text-sm text-retro-brown-light font-bold mt-1 tracking-wide uppercase">
-            🐸 Daily Ritual • Level {dateStr}
+            Daily Ritual • Level {dateStr}
           </span>
         </div>
 
         {/* Matcha Cup Sprite */}
-        <div className="relative w-8 h-8 sm:w-10 sm:h-10 select-none">
+        <div className="relative w-11 h-11 sm:w-13 sm:h-13 select-none">
           <Image
-            src="/matcha_cup.png?v=2"
+            src="/matcha_cup.png"
             alt="Matcha Cup"
             fill
             className="object-contain mix-blend-multiply"
@@ -299,10 +305,10 @@ export function WordleGame() {
           onEnter={onEnter}
           charStatuses={getCharStatuses()}
         />
-        
+
         {/* Footnote */}
         <div className="text-center text-[10px] sm:text-xs text-retro-brown-light/60 font-mono mt-3">
-          Made with love & matcha 🍵 • Next level at local midnight
+          Made with love & matcha 🍵 • Next level at midnight
         </div>
       </div>
 

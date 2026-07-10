@@ -16,30 +16,28 @@ interface AffirmationModalProps {
 
 export function AffirmationModal({ isOpen, isWin, guesses, colors, dateStr, onClose }: AffirmationModalProps) {
   const [affirmation, setAffirmation] = useState<string>('');
+  const [targetWord, setTargetWord] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
   const [copied, setCopied] = useState<boolean>(false);
 
   useEffect(() => {
     if (isOpen) {
-      if (isWin) {
-        // Fetch daily affirmation from secure API
-        fetch(`/api/affirmation?date=${dateStr}`)
-          .then((res) => res.json())
-          .then((data) => {
-            setAffirmation(data.affirmation || "You're doing amazing! Keep leaping forward today.");
-            setLoading(false);
-          })
-          .catch((err) => {
-            console.error('Error loading affirmation:', err);
-            setAffirmation("You're doing amazing! Keep leaping forward today.");
-            setLoading(false);
-          });
-      } else {
-        setAffirmation('Aww, nice try! Remember that even sunflowers have rainy days. Make sure to get some rest and try again tomorrow!');
-        setLoading(false);
-      }
+      setLoading(true);
+      fetch(`/api/affirmation?date=${dateStr}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setAffirmation(data.affirmation || "You're doing amazing! Keep leaping forward today.");
+          setTargetWord(data.targetWord || "");
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.error('Error loading affirmation:', err);
+          setAffirmation("You're doing amazing! Keep leaping forward today.");
+          setTargetWord("");
+          setLoading(false);
+        });
     }
-  }, [isOpen, isWin, dateStr]);
+  }, [isOpen, dateStr]);
 
   const handleShare = () => {
     const text = generateShareText(dateStr, colors, guesses.length, isWin);
@@ -119,6 +117,13 @@ export function AffirmationModal({ isOpen, isWin, guesses, colors, dateStr, onCl
               Level {dateStr} • Attempt {guesses.length}/6
             </div>
 
+            {/* Reveal target word on fail */}
+            {!isWin && targetWord && (
+              <div className="mt-2 mb-1 px-4 py-1.5 bg-cozy-beige border-2 border-retro-brown text-retro-brown rounded font-press-start text-[9px] uppercase tracking-wide">
+                THE WORD WAS: <span className="font-bold text-xs underline">{targetWord}</span>
+              </div>
+            )}
+
             {/* Daily Affirmation Display */}
             <div className="w-full bg-cozy-beige border-4 border-retro-brown p-4 my-3 text-left relative shadow-inner">
               {/* Retro quotation mark */}
@@ -135,17 +140,19 @@ export function AffirmationModal({ isOpen, isWin, guesses, colors, dateStr, onCl
 
             {/* Interactive Control Buttons */}
             <div className="flex flex-col gap-3 w-full mt-4">
-              <button
-                type="button"
-                onClick={handleShare}
-                className="retro-button w-full py-3 px-4 font-press-start text-[10px] sm:text-xs bg-matcha hover:bg-matcha-light text-white font-bold cursor-pointer uppercase flex items-center justify-center gap-2"
-              >
-                {copied ? (
-                  <span className="scale-110 text-cozy-beige animate-bounce">COPIED TO CLIPBOARD!</span>
-                ) : (
-                  <span>SHARE COZY GRID (ASCII)</span>
-                )}
-              </button>
+              {isWin && (
+                <button
+                  type="button"
+                  onClick={handleShare}
+                  className="retro-button w-full py-3 px-4 font-press-start text-[10px] sm:text-xs bg-matcha hover:bg-matcha-light text-white font-bold cursor-pointer uppercase flex items-center justify-center gap-2"
+                >
+                  {copied ? (
+                    <span className="scale-110 text-cozy-beige animate-bounce">COPIED TO CLIPBOARD!</span>
+                  ) : (
+                    <span>SHARE!!!</span>
+                  )}
+                </button>
+              )}
 
               <button
                 type="button"

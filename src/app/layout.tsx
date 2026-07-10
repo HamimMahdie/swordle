@@ -17,7 +17,7 @@ const vt323 = VT323({
 });
 
 export const metadata: Metadata = {
-  title: "Saumya's Wordle 🐸",
+  title: "Swordle",
   description: "A cozy, retro 8-bit daily word game with sweet affirmations, custom green tea & sunflower themes.",
   keywords: ["Wordle", "Saumya's Wordle", "retro wordle", "daily affirmation game"],
   authors: [{ name: "Antigravity" }],
