@@ -31,11 +31,11 @@ export function Keyboard({ onChar, onDelete, onEnter, charStatuses }: KeyboardPr
     // Color feedback classes
     const status = charStatuses[key];
     if (status === 'correct') {
-      baseClass += 'bg-matcha text-white border-retro-brown shadow-[2px_2px_0px_var(--color-retro-brown)] active:shadow-none';
+      baseClass += 'retro-key-correct bg-matcha text-white border-retro-brown shadow-[2px_2px_0px_var(--color-retro-brown)] active:shadow-none';
     } else if (status === 'present') {
-      baseClass += 'bg-sunflower text-retro-brown border-retro-brown shadow-[2px_2px_0px_var(--color-retro-brown)] active:shadow-none';
+      baseClass += 'retro-key-present bg-sunflower text-retro-brown border-retro-brown shadow-[2px_2px_0px_var(--color-retro-brown)] active:shadow-none';
     } else if (status === 'absent') {
-      baseClass += 'bg-retro-brown-light text-cozy-beige/50 border-retro-brown shadow-[2px_2px_0px_var(--color-retro-brown-dark)] active:shadow-none opacity-80';
+      baseClass += 'retro-key-absent bg-retro-brown-light text-cozy-beige border-retro-brown shadow-[2px_2px_0px_var(--color-retro-brown-dark)] active:shadow-none';
     } else {
       baseClass += 'bg-cozy-beige text-retro-brown border-retro-brown shadow-[2px_2px_0px_var(--color-retro-brown)] active:shadow-none';
     }

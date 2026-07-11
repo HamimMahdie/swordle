@@ -85,6 +85,21 @@ body {
   transform: translate(4px, 4px);
 }
 
+.retro-button.retro-key-correct {
+  background-color: var(--color-matcha);
+  color: #faf5eb;
+}
+
+.retro-button.retro-key-present {
+  background-color: var(--color-sunflower);
+  color: var(--color-retro-brown);
+}
+
+.retro-button.retro-key-absent {
+  background-color: var(--color-retro-brown-light);
+  color: #e9deb8;
+}
+
 /* Animations for grid tile flip and shake */
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
