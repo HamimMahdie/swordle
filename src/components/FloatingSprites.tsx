@@ -58,14 +58,14 @@ function FloatingSprite({ src, alt, size, left, top, delay, duration }: SpritePr
 
 export function FloatingSprites() {
   const spriteList = [
-    // Left Side Margin Sprites (5 assets)
+    // Left Side Margin Sprites (6 assets)
     {
       id: 1,
       src: '/frog_lilypad.png',
       alt: 'Frog',
       size: 70,
       left: '4%',
-      top: '12%',
+      top: '8%',
       duration: 8,
       delay: 0,
     },
@@ -75,7 +75,7 @@ export function FloatingSprites() {
       alt: 'Matcha',
       size: 65,
       left: '7%',
-      top: '32%',
+      top: '25%',
       duration: 10,
       delay: 1.5,
     },
@@ -85,22 +85,32 @@ export function FloatingSprites() {
       alt: 'Pumpkin',
       size: 60,
       left: '3%',
-      top: '52%',
+      top: '42%',
       duration: 9,
       delay: 0.8,
     },
     {
       id: 4,
+      src: '/water_lily.png',
+      alt: 'Water Lily',
+      size: 65,
+      left: '8%',
+      top: '58%',
+      duration: 10.5,
+      delay: 1.8,
+    },
+    {
+      id: 5,
       src: '/sunflower.png',
       alt: 'Sunflower',
       size: 62,
       left: '6%',
-      top: '72%',
+      top: '75%',
       duration: 11,
       delay: 2.2,
     },
     {
-      id: 5,
+      id: 6,
       src: '/frog_lilypad.png',
       alt: 'Frog',
       size: 60,
@@ -109,49 +119,59 @@ export function FloatingSprites() {
       duration: 8.5,
       delay: 0.4,
     },
-    // Right Side Margin Sprites (5 assets)
+    // Right Side Margin Sprites (6 assets)
     {
-      id: 6,
+      id: 7,
       src: '/sunflower.png',
       alt: 'Sunflower',
       size: 65,
       left: '88%',
-      top: '12%',
+      top: '8%',
       duration: 11,
       delay: 3,
     },
     {
-      id: 7,
+      id: 8,
       src: '/frog_lilypad.png',
       alt: 'Frog',
       size: 65,
       left: '85%',
-      top: '32%',
+      top: '25%',
       duration: 9.5,
       delay: 1.6,
     },
     {
-      id: 8,
+      id: 9,
       src: '/matcha_cup.png',
       alt: 'Matcha',
       size: 60,
       left: '89%',
-      top: '52%',
+      top: '42%',
       duration: 11,
       delay: 0.2,
     },
     {
-      id: 9,
+      id: 10,
+      src: '/water_lily.png',
+      alt: 'Water Lily',
+      size: 65,
+      left: '84%',
+      top: '58%',
+      duration: 10,
+      delay: 2.4,
+    },
+    {
+      id: 11,
       src: '/pumpkin.png',
       alt: 'Pumpkin',
       size: 58,
       left: '86%',
-      top: '72%',
+      top: '75%',
       duration: 10,
       delay: 1.2,
     },
     {
-      id: 10,
+      id: 12,
       src: '/sunflower.png',
       alt: 'Sunflower',
       size: 60,
@@ -163,7 +183,6 @@ export function FloatingSprites() {
   ];
 
   return (
-    // Restored 'block' to render the sprites in the background on mobile screens as well
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0 select-none block">
       {spriteList.map((sprite) => (
         <FloatingSprite
