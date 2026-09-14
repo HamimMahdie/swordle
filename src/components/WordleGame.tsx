@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Grid } from './Grid';
 import { Keyboard } from './Keyboard';
 import { AffirmationModal } from './AffirmationModal';
+import { SecretVault } from './SecretVault';
 import Image from 'next/image';
 
 interface SavedState {
@@ -25,6 +26,11 @@ export function WordleGame() {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [dateStr, setDateStr] = useState<string>('');
+  const [vaultOpen, setVaultOpen] = useState<boolean>(false);
+  const secretStepRef = useRef<number>(0);
+  const secretTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const [sunflowerPulse, setSunflowerPulse] = useState(false);
+  const [matchaPulse, setMatchaPulse] = useState(false);
   const [mounted, setMounted] = useState<boolean>(false);
 
   // Get user's local date string as YYYY-MM-DD
@@ -244,7 +250,19 @@ export function WordleGame() {
       {/* Header Area */}
       <header className="flex items-center justify-between border-4 border-retro-brown bg-cozy-beige px-3 py-2.5 sm:px-4 sm:py-3 shadow-[4px_4px_0px_var(--color-retro-brown)]">
         {/* Sunflower Sprite */}
-        <div className="relative w-8 h-8 sm:w-10 sm:h-10 select-none">
+        <div
+          className={`relative w-8 h-8 sm:w-10 sm:h-10 select-none cursor-pointer ${sunflowerPulse ? 'animate-icon-pulse' : ''}`}
+          onClick={() => {
+            // Step 1 of secret combo
+            setSunflowerPulse(true);
+            setTimeout(() => setSunflowerPulse(false), 300);
+            secretStepRef.current = 1;
+            if (secretTimerRef.current) clearTimeout(secretTimerRef.current);
+            secretTimerRef.current = setTimeout(() => {
+              secretStepRef.current = 0;
+            }, 2000);
+          }}
+        >
           <Image
             src="/sunflower.png"
             alt="Sunflower"
@@ -266,7 +284,19 @@ export function WordleGame() {
         </div>
 
         {/* Matcha Cup Sprite */}
-        <div className="relative w-11 h-11 sm:w-13 sm:h-13 select-none">
+        <div
+          className={`relative w-11 h-11 sm:w-13 sm:h-13 select-none cursor-pointer ${matchaPulse ? 'animate-icon-pulse' : ''}`}
+          onClick={() => {
+            setMatchaPulse(true);
+            setTimeout(() => setMatchaPulse(false), 300);
+            if (secretStepRef.current === 1) {
+              // Step 2 complete — open the vault!
+              secretStepRef.current = 0;
+              if (secretTimerRef.current) clearTimeout(secretTimerRef.current);
+              setVaultOpen(true);
+            }
+          }}
+        >
           <Image
             src="/matcha_cup.png"
             alt="Matcha Cup"
@@ -320,6 +350,12 @@ export function WordleGame() {
         colors={colors}
         dateStr={dateStr}
         onClose={() => setShowModal(false)}
+      />
+
+      {/* Secret Vault */}
+      <SecretVault
+        isOpen={vaultOpen}
+        onClose={() => setVaultOpen(false)}
       />
     </div>
   );
